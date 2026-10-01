@@ -1,0 +1,15 @@
+{
+  "name": "veilus",
+  "description": "Official Veilus plugins for Claude Code.",
+  "owner": {
+    "name": "Veilus",
+    "url": "https://veilus.io"
+  },
+  "plugins": [
+    {
+      "name": "veilus",
+      "source": "./veilus",
+      "description": "Let Claude run a whole Veilus campaign over MCP: proxies, profiles, a tested script, a schedule, and a report."
+    }
+  ]
+}

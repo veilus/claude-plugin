@@ -1,0 +1,17 @@
+{
+  "name": "veilus",
+  "version": "0.1.0",
+  "description": "Drive Veilus from Claude Code over MCP: import proxies, create profiles, learn a site, write and test a Playwright script, plan a schedule and run it — with the user approving the script and the plan.",
+  "author": {
+    "name": "Veilus",
+    "url": "https://veilus.io"
+  },
+  "homepage": "https://docs.veilus.io",
+  "keywords": [
+    "veilus",
+    "mcp",
+    "browser-automation",
+    "playwright",
+    "antidetect"
+  ]
+}
