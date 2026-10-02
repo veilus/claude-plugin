@@ -31,6 +31,8 @@ Tools are on the Veilus MCP server (`mcp__veilus__<tool>`). Answer in the user's
 
 Per-profile inputs come from `process.env.VEILUS_VAR_<NAME>` (UPPER_SNAKE_CASE). Print what you need to check with `console.log`; stdout and stderr tails appear in `get_run_result`.
 
+Dataset columns arrive the same way. A content dataset also sets `VEILUS_VAR_ROWS`: `JSON.parse` it (it may hold fewer rows than asked when the dataset is nearly empty), and `VEILUS_VAR_ROW_INDEX`: print it next to each result. Every value is a string.
+
 Template:
 
 ```ts
@@ -70,7 +72,7 @@ Good practice:
 2. Trial it with `run_script(profile_ids, script_id, variables?)` on **at most 3** profiles. It returns a run immediately; its `id` is the run id.
 3. Poll `get_run_result(run_id)` every few seconds until the run is no longer running. Read each profile's exit code and stdout/stderr tail.
 4. On failure, read the error, fix the source (use `get_script` to reread it), save again, trial again. Stop after about 5 failed attempts and show the user the last error instead of looping.
-5. Unapproved scripts get **only** the variables passed to `run_script`, not the profiles' stored variables.
+5. Unapproved scripts get **only** the variables passed to `run_script`: not the profiles' stored variables, not their dataset rows. If each profile needs different values (its own account), make one `run_script` call per profile, each with that profile's values.
 
 ## 4. Stop A: approval
 
@@ -80,4 +82,4 @@ When the trial passes, stop and ask the user to approve it:
 
 Then confirm with `get_script(script_id)` that `approved` is `true` before any schedule or batch run. If it is still `false`, ask again; do not try to work around it.
 
-After approval, store per-profile inputs with `set_profile_variables(profile_id, variables)` if the job needs them. It **replaces all** of that profile's variables: omitted names are deleted. It returns names, never values.
+After approval, per-profile inputs go into a dataset (campaign skill, section 3b); `set_profile_variables(profile_id, variables)` remains for a one-off value. It **replaces all** of that profile's variables: omitted names are deleted. It returns names, never values.

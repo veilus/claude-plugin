@@ -106,6 +106,7 @@ Vì sao có bước này: script đã duyệt sẽ chạy theo lịch mà không
 - "Nhập các proxy này, thử chúng và cho tôi biết cái nào chết:" rồi dán danh sách proxy.
 - "Tạo 10 hồ sơ Windows trên pool US của tôi, gắn thẻ `khuyen-mai`."
 - "Viết script đăng nhập bằng biến `EMAIL` và `PASSWORD` của từng hồ sơ rồi kiểm tra trang dashboard mở được. Chưa lên lịch."
+- "Tôi có file accounts.csv gồm email và password. Đưa vào một bộ dữ liệu và gán mỗi tài khoản cho một hồ sơ thẻ `khuyen-mai`."
 - "Lên lịch cho script đã duyệt `Kiểm tra hằng ngày` trên mọi hồ sơ thẻ `khuyen-mai`, 8:30 mỗi sáng, 2 hồ sơ cùng lúc."
 - "Chạy `Kiểm tra hằng ngày` ngay bây giờ và cho tôi biết hồ sơ nào hỏng, vì sao."
 

@@ -36,7 +36,7 @@ A `401`/token error means the token is missing, wrong or revoked: mint a new one
 Ask in **one** message for whatever is missing. Do not create anything until you have it:
 
 - **Site and job**: URL, what to do there, and what counts as success (what should be printed or checked at the end).
-- **Accounts or inputs per profile**, if the job needs them (logins, texts to post). These become profile variables later; never paste secrets into script source.
+- **Accounts or inputs per profile**, if the job needs them (logins, texts to post). They go into a dataset (section 3b) or profile variables; never paste secrets into script source.
 - **How many profiles**, and which **OS** (default: same as this computer).
 - **Proxies**: an existing pool (show `list_proxy_pools`) or a list of lines to import. Ask which country/city they exit in.
 - **How often**: once, every N minutes/hours, daily at a time, weekly, or a cron expression; and for how long.
@@ -61,6 +61,21 @@ Repeat the request back as a short checklist and get a yes.
 
 Existing profiles instead? Use them as they are. `assign_proxy_pool` refuses profiles that already have a proxy; pass `force: true` **only after the user says so**, and warn that the timezone is not regenerated (the geo check may then block launch).
 
+## 3b. Data for scripts
+
+Per-profile inputs reach a script as `process.env.VEILUS_VAR_<COLUMN>`. Each profile has two dataset slots; the slot follows the dataset's mode:
+
+- **Identity** — a `fixed` dataset: exactly one row per profile, kept for good (accounts). `create_dataset(name, mode: "fixed", columns, rows)`, then `assign_dataset(dataset_id, profile_ids)` or `identity_dataset_id` in `create_profiles`. Columns arrive as `VEILUS_VAR_<COLUMN>`. Profiles left without a row are listed in `withoutRow`: tell the user, and never share one account between profiles.
+- **Content** — a `consume` dataset (posts, keywords, links) with `rows_per_run` N (1-50). Each run takes N unused rows as `VEILUS_VAR_ROWS` (JSON array of `{COLUMN: value}`); with N = 1 each column also arrives on its own. `VEILUS_VAR_ROW_INDEX` is the row's number. A failed run gives its rows back; when none are left the profile fails early: offer `append_dataset_rows` or `reset_dataset_rows`. Use `content_dataset_id` in `create_profiles`, or `assign_dataset`.
+- **A value shared by one run** → `variables` in `run_script` / `run_batch`; it wins over a dataset or stored variable of the same name.
+
+Rules:
+
+- Values must be strings. From a spreadsheet (`.xlsx`) read the file yourself and convert numbers and dates before `create_dataset`. Bad rows come back in `rejected` by row number.
+- Mark password columns `secret: true`. Secret columns are given to approved scripts but no tool returns them (`get_dataset_rows`, `list_datasets`); do not try to read them back.
+- Column names are UPPER_SNAKE_CASE; `ROWS`, `ROW_INDEX`, `PROFILE_ID`, `RUN_ID`, `DEBUG_PORT` are reserved, and the two slots cannot share a column name.
+- Dataset data reaches **approved** scripts only. To trial an unapproved script, pass that profile's values in `run_script(variables)`: one call per profile (max 3 profiles).
+
 ## 4. Hand over to the other skills
 
 - Part 2: follow the `script` skill. It ends at **stop A**.
@@ -72,7 +87,7 @@ Existing profiles instead? Use them as they are. `assign_proxy_pool` refuses pro
 - **Nothing can be deleted over MCP.** If the user wants something removed, tell them to do it in the app.
 - **Rate limit:** at most 30 expensive calls per 60 seconds per token (creating profiles, launching, running, saving scripts…). On `429`, wait the `Retry-After` seconds, then continue; never loop fast on errors.
 - **`evaluate_js` is not a sandbox**: it runs with the page's full rights (cookies, requests as the user). Use it to read, not to act on the user's accounts.
-- **Profile variables reach only approved scripts.** For a trial of an unapproved script, pass values in the `run_script` call.
+- **Profile variables and dataset rows reach only approved scripts.** For a trial of an unapproved script, pass values in the `run_script` call.
 - **Never print secrets**: proxy passwords, tokens, account passwords.
 - **Stop profiles you launched** (`stop_profile`) when you are done learning a site.
 - If a call returns something you did not expect, say so and show the message; do not guess and continue.

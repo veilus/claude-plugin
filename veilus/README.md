@@ -106,6 +106,7 @@ Why this step exists: an approved script runs on its schedule without anyone wat
 - "Import these proxies, test them, and tell me which ones are dead:" followed by the proxy lines.
 - "Create 10 Windows profiles on my US pool, tagged `spring-sale`."
 - "Write a script that logs in with each profile's `EMAIL` and `PASSWORD` variables and checks the dashboard loads. Don't schedule it yet."
+- "I have accounts.csv with email and password. Put it in a dataset and assign one account to each profile tagged `spring-sale`."
 - "Schedule the approved script `Daily check` for all `spring-sale` profiles every day at 08:30, 2 at a time."
 - "Run `Daily check` now and tell me which profiles failed and why."
 
