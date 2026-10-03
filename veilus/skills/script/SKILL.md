@@ -68,6 +68,7 @@ Good practice:
 
 ## 3. Save, trial, fix
 
+0. Call `list_scripts` first. It lists every script with `name`, `mode`, `origin` and `approved`, without the source. If one with the same purpose exists and its `origin` is `mcp`, update it with `save_script(script_id, source)` instead of saving a duplicate. Scripts with `origin: app` belong to the user: read them, never overwrite them.
 1. `save_script(name, source, description)` returns `scriptId`, `version` and `approved: false`. To change it later, call `save_script(script_id, source)` again. Only scripts saved by an agent can be updated, and updating does not rename them.
 2. Trial it with `run_script(profile_ids, script_id, variables?)` on **at most 3** profiles. It returns a run immediately; its `id` is the run id.
 3. Poll `get_run_result(run_id)` every few seconds until the run is no longer running. Read each profile's exit code and stdout/stderr tail.

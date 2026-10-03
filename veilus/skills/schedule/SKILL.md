@@ -9,7 +9,7 @@ Tools are on the Veilus MCP server (`mcp__veilus__<tool>`). Answer in the user's
 
 ## 1. Preconditions
 
-- `get_script(script_id)` must return `approved: true`. If not, go back to stop A of the `script` skill: the user must approve it in Veilus Flow. `create_schedule` refuses unapproved scripts.
+- `get_script(script_id)` must return `approved: true` (`list_scripts` shows it for every script at once). If not, go back to stop A of the `script` skill: the user must approve it in Veilus Flow. `create_schedule` refuses unapproved scripts.
 - You know the target profiles (ids) and how often the user wants it to run.
 
 ## 2. Size it to the machine
