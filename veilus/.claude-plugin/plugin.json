@@ -1,6 +1,6 @@
 {
   "name": "veilus",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Drive Veilus from Claude Code over MCP: import proxies, create profiles, learn a site, write and test a Playwright script, plan a schedule and run it — with the user approving the script and the plan.",
   "author": {
     "name": "Veilus",

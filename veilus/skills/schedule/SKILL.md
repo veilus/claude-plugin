@@ -30,8 +30,9 @@ Tools are on the Veilus MCP server (`mcp__veilus__<tool>`). Answer in the user's
 | `daily` | `daily_hour`, `daily_minute` | this computer's local time |
 | `weekly` | `daily_hour`, `daily_minute`, `weekly_day` (0 = Sunday) | local time |
 | `cron` | `cron_expr` | 5 fields |
+| `once` | `run_at` (RFC 3339 with offset, e.g. `2026-10-04T09:00:00+07:00`) | runs once, then turns itself off; must be in the future |
 
-The computer must be on and Veilus running at those times.
+Use `once` for a single run later (for example "tomorrow at 9"), not a cron with a fixed date: that cron repeats next year. The computer must be on and Veilus running at those times.
 
 ## 4. Stop B: the plan table
 
