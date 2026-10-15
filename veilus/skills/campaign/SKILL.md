@@ -89,7 +89,7 @@ Rules:
 - **`evaluate_js` is not a sandbox**: it runs with the page's full rights (cookies, requests as the user). Use it to read, not to act on the user's accounts.
 - **Profile variables and dataset rows reach only approved scripts.** For a trial of an unapproved script, pass values in the `run_script` call.
 - **Never print secrets**: proxy passwords, tokens, account passwords.
-- **Stop profiles you launched** (`stop_profile`) when you are done learning a site.
+- **Stop profiles you launched** (`stop_profile`) when you are done learning a site. A profile launched over MCP that gets no call naming it for 30 minutes (the user's setting) is stopped for you; that is a safety net, not a reason to skip `stop_profile`.
 - If a call returns something you did not expect, say so and show the message; do not guess and continue.
 
 ## Final report
