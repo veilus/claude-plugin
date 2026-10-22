@@ -12,3 +12,5 @@ claude plugin install veilus@veilus
 ```
 
 Setup, usage and troubleshooting: [English](veilus/README.md) · [Tiếng Việt](veilus/README.vi.md).
+
+The MCP tools the plugin calls are listed in the [MCP reference](https://docs.veilus.io/reference/mcp/).
